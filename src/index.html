@@ -15,7 +15,6 @@
 
     console.log("data", data);
 
-    // Create the chart
     Highcharts.stockChart("chart-container", {
       rangeSelector: {
         selected: 1,
@@ -26,6 +25,12 @@
       },
       time: {
         timezone: "Europe/Berlin",
+      },
+      yAxis: {
+        title: {
+          text: "Preis [€]",
+        },
+        tickInterval: 0.05,
       },
 
       series: data,
