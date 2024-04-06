@@ -1,0 +1,56 @@
+= Development Process
+
+== First Steps
+- heard from a friend that oracle has a free VPS offering
+- follow oracle's guide to get ssh access
+- install nodejs via nvm
+- create hello world server
+- copy it to the VPS via scp
+- start and test it with the browser by entering the ip
+- it is unreachable (as expected)
+
+== Open Ports
+ - need to open ports 80 and 443 (HTTP+HTTPS)
+ - open oracle cloud
+ - go to vps instance ->
+ VNIC -> Subnet -> security lists
+ - add port 80 + 443
+ - install ufw to change firewall settings (easier than iptables)
+ - allow 80/tcp, 443/tcp
+ - I see the hello world page in the browser!
+
+[source,bash]
+----
+sudo ufw enable
+sudo ufw allow 80/tcp
+sudo ufw allow 443/tcp 
+----
+
+== write script to get gas prices from gas station homepage
+ - install bun (wanna try it more + has integrated Typescript)
+ - fetch the data and parse it
+ - save data to a file
+
+== setup a bun server (elysia)
+ - try different chart librarys
+ - choose highsharts (seems like a good fit because of stack chart)
+ - research API and format for supplied data
+ - add data route that get's data from the file and adjust to the desired format
+ - I see the chart in the browser!
+
+== Automation
+- setup cronjob that runs the script that get
+the gas prices
+`crontab -e` `0 * * * * /path/to/script.sh`
+- redirect the logs to a file so you can see the errors `command >> /path/to/cronjob.log 2>&1`
+- setup systemd service to start the elysia server
+- learn that you have to use a lot absolute paths
+- create a service file: `/etc/systemd/system/elysia-server.service`
+- now the server starts automatically with the VPS. I can start, stop, restart and check the status with systemctl. I can check logs using journalctl
+
+== Next steps
+- add HTTPS with nginx
+- maybe get a domain
+- maybe get a better way to get my code on the VPS
+ - git or docker
+ - use config files like .env to test locally and on VPS
